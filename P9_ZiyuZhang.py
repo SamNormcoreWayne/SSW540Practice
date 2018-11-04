@@ -29,6 +29,7 @@ class ClassicBook:
 
     def __init__(self):
         self.words_dic = defaultdict(int)
+        self.character_freq_dict = defaultdict(int)
         self.path = str()
         self.words = list()
 
@@ -66,13 +67,16 @@ class ClassicBook:
         return self.words[:25]
 
     def get_sorted(self):
-        if len(self.words) > 0:
-            return sorted(self.words)
+        for word in self.words_dic.keys():
+            for cha in word:
+                self.character_freq_dict[cha] += 1
+        self.character_freq_dict = sorted(self.character_freq_dict.items(), key=lambda x: x[1], reverse=True)
+        return self.character_freq_dict
 
 
 def main():
     tom_sawyer = ClassicBook()
-    tom_sawyer.get_path(file_name='TomSawyer.txt', path='C://Users//64937//OneDrive//Documents//SSW//540//')
+    tom_sawyer.get_path(file_name='TomSawyer.txt', path='C://Users//64937//OneDrive//Documents//SSW//540//Codes//')
     # You can change the path to your directory here.
     tom_sawyer.get_words_dic()
     print(tom_sawyer.get_words_num())
